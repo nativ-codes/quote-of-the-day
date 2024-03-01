@@ -1,91 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adăugare text peste imagine</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Adăugare text peste imagine</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Montserrat:wght@600&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Montserrat:wght@600&family=Open+Sans:wght@500&display=swap" rel="stylesheet">
+	<style>
+		@font-face {
+			font-family: 'Caviar Dreams';
+			src: url('./CaviarDreams.ttf');
+		}
 
-<style>
-    @font-face {
-        font-family: 'Caviar Dreams';
-        src: url('./CaviarDreams.ttf');
-    }
+		* {
+			font-family: 'Caviar Dreams';
+			margin: 0;
+			padding: 0;
+		}
+		
+		.image-container {
+			position: relative;
+			display: inline-flex;
+		}
 
-    * {
-        font-family: 'Caviar Dreams';
-    }
-    
-    #image-container {
-        position: relative;
-        display: inline-block;
-    }
+		#text-overlay {
+			flex-direction: column;
+			position: absolute;
+			color: white;
+			pointer-events: none;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0,0,0,0.6);
+			padding: 0 48px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 
-    #text-overlay {
-        flex-direction: column;
-        position: absolute;
-        font-size: 50px;
-        color: white;
-        pointer-events: none;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.6);
-        text-align: center;
-        padding: 0 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+		#quotes {
+			width: 120px;
+			opacity: 0.8;
+			margin-bottom: 48px;
+			margin-top: -48px;
+		}
 
-    #quotes {
-        width: 100px;
-        opacity: 0.8;
-        margin-bottom: 48px;
-        margin-top: -48px;
-    }
+		.caption {
+			font-size: 50px;
+			margin-top: 32px;
+			opacity: 0.8;
+		}
 
-    #author {
-        font-size: 32px;
-        margin-top: 32px;
-        opacity: 0.8;
-    }
-</style>
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+		#qDay {
+			font-size: 70px;
+			font-weight: bold;
+			text-align: center;
+		}
 
-
+		#quote {
+			font-size: 70px;
+			text-align: center;
+		}
+	</style>
+	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
+	<div class="image-container" id="quote-of-the-day">
+		<img class="background" src="" alt="Imagine">
+		<div id="text-overlay">
+			<img id="quotes" src="quotes.png">
+			<div id="qDay">Quote of the Day</div>
+			<div class="caption" id="day"></div>
+		</div>
+	</div>
 
-<div id="image-container">
-    <img id="image" src="motiva.jpg" alt="Imagine">
-    <div id="text-overlay">
-        <img id="quotes" src="quotes1.png">
-        <div id="quote">The greatest glory in living lies not in never falling, but in rising every time we fall.</div>
-        <div id="author">Vlad Burca</div>
-    </div>
-</div>
+	<div class="image-container" id="quote-container">
+		<img class="background" src="" alt="Imagine">
+		<div id="text-overlay">
+			<img id="quotes" src="quotes.png">
+			<div id="quote"></div>
+			<div class="caption" id="author"></div>
+		</div>
+	</div>
+	
+	<script>
+		window.onload = function() {
+			(async () => {
+				const mock = {
+					imgUrl: 'backgrounds/background (108).png',
+					quote: 'The greatest glory in living lies not in never falling, but in rising every time we fall.',
+					author: 'Vlad Burca',
+					day: '1 March 2024'
+				}
+				const {imgUrl, quote, author, day} = mock;//await (await fetch('http://localhost:3000/generate')).json();
 
-<script>
+				document.getElementById('author').innerText = author;
+				document.getElementById('quote').innerText = quote;
+				document.getElementById('day').innerText = day;
+				// console.log(document.getElementsByClassName('background'));
+				document.querySelectorAll('.background').forEach(image => {
+					image.src = imgUrl;
+				})
 
-</script>
+				html2canvas(document.getElementById("quote-of-the-day")).then(canvas => {
+					canvas.className = "html2canvas";
+					document.body.appendChild(canvas);
+					// document.getElementById("quote-of-the-day").style.display = "none";
+				});
+				html2canvas(document.getElementById("quote-container")).then(canvas => {
+					canvas.className = "html2canvas";
+					document.body.appendChild(canvas);
+					// document.getElementById("quote-container").style.display = "none";
+				});
+			})()
 
-<script>
-	window.onload = function() {
-		html2canvas(document.getElementById("image-container"), {
-			logging:true,
-			allowTaint : true,
-			useCORS: true,
-		}).then(canvas => {
-			canvas.className = "html2canvas";
-			document.body.appendChild(canvas);
-			// document.getElementById("image-container").style.display = "none";
-		});
-	}	
-</script>
+		}
+	</script>
 </body>
 </html>
