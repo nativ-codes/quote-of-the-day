@@ -35,7 +35,7 @@
 			right: 0;
 			bottom: 0;
 			background: rgba(0,0,0,0.6);
-			padding: 0 48px;
+			padding: 0 96px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -95,12 +95,11 @@
 					author: 'Vlad Burca',
 					day: '1 March 2024'
 				}
-				const {imgUrl, quote, author, day} = mock;//await (await fetch('http://localhost:3000/generate')).json();
+				const {imgUrl, quote, author, day} = await (await fetch('http://localhost:3000/generate')).json();
 
 				document.getElementById('author').innerText = author;
 				document.getElementById('quote').innerText = quote;
 				document.getElementById('day').innerText = day;
-				// console.log(document.getElementsByClassName('background'));
 				document.querySelectorAll('.background').forEach(image => {
 					image.src = imgUrl;
 				})
@@ -108,12 +107,12 @@
 				html2canvas(document.getElementById("quote-of-the-day")).then(canvas => {
 					canvas.className = "html2canvas";
 					document.body.appendChild(canvas);
-					// document.getElementById("quote-of-the-day").style.display = "none";
+					document.getElementById("quote-of-the-day").style.display = "none";
 				});
 				html2canvas(document.getElementById("quote-container")).then(canvas => {
 					canvas.className = "html2canvas";
 					document.body.appendChild(canvas);
-					// document.getElementById("quote-container").style.display = "none";
+					document.getElementById("quote-container").style.display = "none";
 				});
 			})()
 
