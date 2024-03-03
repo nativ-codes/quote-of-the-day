@@ -19,6 +19,10 @@
 			margin: 0;
 			padding: 0;
 		}
+
+		.title {
+			margin: 24px;
+		}
 		
 		.image-container {
 			position: relative;
@@ -68,6 +72,13 @@
 	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
+	<div class="title">
+		<span id="quote-title"></span> - 
+		<span>
+			#quotes #motivation #poetry #lifequotes #rulesoflife #inspirationalquotes #inspirational #dailyquote #foryou #fyp 
+			<span id="author-tag"></span>
+		</span>
+	</div>
 	<div class="image-container" id="quote-of-the-day">
 		<img class="background" src="" alt="Imagine">
 		<div id="text-overlay">
@@ -98,7 +109,9 @@
 				const {imgUrl, quote, author, day} = await (await fetch('http://localhost:3000/generate')).json();
 
 				document.getElementById('author').innerText = author;
+				document.getElementById('author-tag').innerText = `#${author.toLowerCase().split(' ').join('')}`;
 				document.getElementById('quote').innerText = quote;
+				document.getElementById('quote-title').innerText = `${quote} ${author}`;
 				document.getElementById('day').innerText = day;
 				document.querySelectorAll('.background').forEach(image => {
 					image.src = imgUrl;
@@ -115,7 +128,6 @@
 					document.getElementById("quote-container").style.display = "none";
 				});
 			})()
-
 		}
 	</script>
 </body>
