@@ -74,10 +74,7 @@
 <body>
 	<div class="title">
 		<span id="quote-title"></span> - 
-		<span>
-			#quotes #motivation #poetry #lifequotes #rulesoflife #inspirationalquotes #inspirational #dailyquote #foryou #fyp 
-			<span id="author-tag"></span>
-		</span>
+		<span id="hashtags"></span>
 	</div>
 	<div class="image-container" id="quote-of-the-day">
 		<img class="background" src="" alt="Imagine">
@@ -106,10 +103,10 @@
 					author: 'Vlad Burca',
 					day: '1 March 2024'
 				}
-				const {imgUrl, quote, author, day} = await (await fetch('http://localhost:3000/generate')).json();
+				const {imgUrl, quote, author, hashtags, day} = await (await fetch('http://localhost:3000/generate')).json();
 
 				document.getElementById('author').innerText = author;
-				document.getElementById('author-tag').innerText = `#${author.toLowerCase().split(' ').join('')}`;
+				document.getElementById('hashtags').innerText = hashtags;
 				document.getElementById('quote').innerText = quote;
 				document.getElementById('quote-title').innerText = `${quote} ${author}`;
 				document.getElementById('day').innerText = day;
