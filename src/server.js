@@ -7,14 +7,14 @@ const cors = require("cors");
 
 const app = express();
 const port = 3000;
-const isDebugMode = true;
-const generatedQuotesFile = `generated${isDebugMode ? ".debug" : ""}.txt`;
+const isDebugMode = false;
+const generatedQuotesFile = `./src/generated${isDebugMode ? ".debug" : ""}.txt`;
 
 app.use(cors());
-app.use(express.static("../public"));
+app.use(express.static("public"));
 
-const backgroundsPath = "../public/backgrounds";
-const rawBackgroundsPath = "../public/raw-backgrounds";
+const backgroundsPath = "public/backgrounds";
+const rawBackgroundsPath = "public/raw-backgrounds";
 const getRandomString = () => (Math.random() + 1).toString(36).substring(2);
 const getRandomFromList = (list) =>
 	list[Math.floor(Math.random() * list.length)];
@@ -84,11 +84,11 @@ function getHashtags(author) {
 		!newHashtags.includes(newHashtag) && newHashtags.push(newHashtag);
 	}
 
-	return newHashtags.join(", ");
+	return newHashtags.join(" ");
 }
 
 app.get("/generate", (req, res) => {
-	const day = "17 March 2024";
+	const day = "20 April 2024";
 	const { background, author, quote } = getNewQuote();
 	const content = `${day}::${background}::${author}::${quote}\n`;
 	const hashtags = getHashtags(author);
